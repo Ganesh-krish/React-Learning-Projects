@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
-function TaskForm({ addTask }) {
+function TaskForm({ addTask, editingTask, updateTask }) {
 
     const [formData, setFormData] = useState({
         title: "",
@@ -18,6 +18,19 @@ function TaskForm({ addTask }) {
         }));
     }
 
+    useEffect(() => {
+
+        if (editingTask) {
+            setFormData({
+                title: editingTask.title,
+                category: editingTask.category,
+                priority: editingTask.priority,
+                dueDate: editingTask.dueDate
+            });
+        }
+
+    }, [editingTask]);
+
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -25,16 +38,32 @@ function TaskForm({ addTask }) {
             return;
         }
 
-        const newTask = {
-            id: Date.now(),
-            title: formData.title.trim(),
-            category: formData.category,
-            priority: formData.priority,
-            dueDate: formData.dueDate,
-            completed: false
-        };
+        if (editingTask) {
 
-        addTask(newTask);
+            const updatedTask = {
+                ...editingTask,
+                title: formData.title.trim(),
+                category: formData.category,
+                priority: formData.priority,
+                dueDate: formData.dueDate
+            };
+
+            updateTask(updatedTask);
+
+        } else {
+
+            const newTask = {
+                id: Date.now(),
+                title: formData.title.trim(),
+                category: formData.category,
+                priority: formData.priority,
+                dueDate: formData.dueDate,
+                completed: false
+            };
+
+            addTask(newTask);
+
+        }
 
         setFormData({
             title: "",
@@ -86,7 +115,7 @@ function TaskForm({ addTask }) {
                 />
 
                 <button type="submit">
-                    Add Task
+                    {editingTask ? "Update Task" : "Add Task"}
                 </button>
 
             </form>

@@ -2,17 +2,38 @@ import Header from "./components/Header";
 import TaskForm from "./components/TaskForm";
 import FilterBar from "./components/FilterBar";
 import TaskList from "./components/TaskList";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 
 function App() {
 
+  
   const [tasks, setTasks] = useState(() => {
+  
     const savedTasks = localStorage.getItem("tasks");
 
     return savedTasks
-        ? JSON.parse(savedTasks)
-        : [];
-});
+            ? JSON.parse(savedTasks)
+            : [];
+  });
+
+  const [editingTask, setEditingTask] = useState(null);
+
+  function startEditTask(task) {
+    setEditingTask(task);
+  }
+
+  function updateTask(updatedTask) {
+
+      setTasks(prevTasks =>
+          prevTasks.map(task =>
+              task.id === updatedTask.id
+                  ? updatedTask
+                  : task
+          )
+      );
+
+      setEditingTask(null);
+  }
 
   const [filters, setFilters] = useState({
       search: "",
@@ -100,6 +121,7 @@ function App() {
                   tasks={filteredTasks} 
                   deleteTask={deleteTask}
                   toggleTask={toggleTask}
+                  onEdit={startEditTask}
                 />
             </main>
         </div>

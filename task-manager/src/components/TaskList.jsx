@@ -1,4 +1,4 @@
-function TaskList({ tasks, deleteTask, toggleTask }) {
+function TaskList({ tasks, deleteTask, toggleTask,onEdit  }) {
 
     return (
         <section>
@@ -27,6 +27,10 @@ function TaskList({ tasks, deleteTask, toggleTask }) {
                         {task.completed ? "Undo" : "Complete"}
                     </button>
 
+                     <button onClick={() => onEdit(task)}>
+                        Edit
+                    </button>
+                    
                     <button onClick={() => deleteTask(task.id)}>
                         Delete
                     </button>
