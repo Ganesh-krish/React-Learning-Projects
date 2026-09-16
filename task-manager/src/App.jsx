@@ -6,14 +6,13 @@ import {useState} from "react";
 
 function App() {
 
-  const [tasks,setTasks] = useState([
-      {
-        id: 1,
-        title: "Learn React",
-        priority: "High",
-        completed: false
-    }
-  ]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+
+    return savedTasks
+        ? JSON.parse(savedTasks)
+        : [];
+});
 
   const [filters, setFilters] = useState({
       search: "",
@@ -21,6 +20,13 @@ function App() {
       priority: "All",
       status: "All"
   });
+
+  useEffect(() => {
+        localStorage.setItem(
+            "tasks",
+            JSON.stringify(tasks)
+        );
+  }, [tasks]);
 
     function addTask(task) {
         setTasks(prevTasks => [...prevTasks, task]);
