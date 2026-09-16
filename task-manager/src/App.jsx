@@ -19,6 +19,21 @@ function App() {
         setTasks(prevTasks => [...prevTasks, task]);
     }
 
+    function deleteTask(id) {
+        setTasks(prevTasks =>
+            prevTasks.filter(task => task.id !== id)
+        );
+    }
+
+    function toggleTask(id) {
+        setTasks(prevTasks =>
+            prevTasks.map(task =>
+                task.id === id
+                    ? { ...task, completed: !task.completed }
+                    : task
+            )
+        );
+    }
     return (
         <div>
             <Header />
@@ -28,7 +43,11 @@ function App() {
 
                 <FilterBar />
 
-                <TaskList tasks={tasks} />
+                <TaskList 
+                  tasks={tasks} 
+                  deleteTask={deleteTask}
+                  toggleTask={toggleTask}
+                />
             </main>
         </div>
     );
