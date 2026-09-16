@@ -4,7 +4,7 @@ import FilterBar from "./components/FilterBar";
 import TaskList from "./components/TaskList";
 import TaskStats from "./components/TaskStats";
 import {useState,useEffect} from "react";
-
+import "./App.css";
 function App() {
 
   
@@ -120,21 +120,22 @@ function App() {
         tasks.filter(task => !task.completed).length;
 
     const highPriorityTasks =
-        tasks.filter(task => task.priority === "High").length
-        
-        ;
+        tasks.filter(task => task.priority === "High").length;
+
     return (
-        <div>
+        <div className="app">
+
             <Header />
 
-            <main>
+            <main className="container">
+
                 <TaskForm
                     addTask={addTask}
                     editingTask={editingTask}
                     updateTask={updateTask}
                     cancelEdit={cancelEdit}
                 />
-                
+
                 <TaskStats
                     totalTasks={totalTasks}
                     activeTasks={activeTasks}
@@ -147,13 +148,15 @@ function App() {
                     onFilterChange={handleFilterChange}
                 />
 
-                <TaskList 
-                  tasks={filteredTasks} 
-                  deleteTask={deleteTask}
-                  toggleTask={toggleTask}
-                  onEdit={startEditTask}
+                <TaskList
+                    tasks={filteredTasks}
+                    deleteTask={deleteTask}
+                    toggleTask={toggleTask}
+                    onEdit={startEditTask}
                 />
+
             </main>
+
         </div>
     );
 }

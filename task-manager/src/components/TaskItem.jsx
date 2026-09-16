@@ -6,39 +6,64 @@ function TaskItem({
 }) {
 
     return (
-        <div>
+        <article className={`task-card ${task.completed ? "completed" : ""}`}>
 
-            <h3>{task.title}</h3>
+            <div className="task-content">
 
-            <p>Category: {task.category}</p>
+                <div className="task-header">
 
-            <p>Priority: {task.priority}</p>
+                    <h3>{task.title}</h3>
 
-            <p>
-                Due Date: {task.dueDate || "No due date"}
-            </p>
+                    <span className={`priority ${task.priority.toLowerCase()}`}>
+                        {task.priority}
+                    </span>
 
-            <p>
-                Status: {
-                    task.completed
-                        ? "Completed"
-                        : "Active"
-                }
-            </p>
+                </div>
 
-            <button onClick={() => toggleTask(task.id)}>
-                {task.completed ? "Undo" : "Complete"}
-            </button>
+                <div className="task-details">
 
-            <button onClick={() => onEdit(task)}>
-                Edit
-            </button>
+                    <span>{task.category}</span>
 
-            <button onClick={() => deleteTask(task.id)}>
-                Delete
-            </button>
+                    <span>
+                        {task.dueDate
+                            ? `Due: ${task.dueDate}`
+                            : "No due date"}
+                    </span>
 
-        </div>
+                    <span>
+                        {task.completed ? "Completed" : "Active"}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div className="task-actions">
+
+                <button
+                    onClick={() => toggleTask(task.id)}
+                    className="complete-btn"
+                >
+                    {task.completed ? "Undo" : "Complete"}
+                </button>
+
+                <button
+                    onClick={() => onEdit(task)}
+                    className="edit-btn"
+                >
+                    Edit
+                </button>
+
+                <button
+                    onClick={() => deleteTask(task.id)}
+                    className="delete-btn"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        </article>
     );
 }
 

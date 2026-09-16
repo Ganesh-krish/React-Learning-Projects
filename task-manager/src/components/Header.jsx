@@ -1,6 +1,6 @@
 function Header() {
     return (
-        <header>
+        <header className="header">
             <h1>Task Manager</h1>
             <p>Manage your tasks efficiently</p>
         </header>

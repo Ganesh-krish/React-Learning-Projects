@@ -85,17 +85,20 @@ function TaskForm({ addTask, editingTask, updateTask, cancelEdit }) {
     }
 
     return (
-        <section>
-            <h2>Add Task</h2>
+        <section className="card">
 
-            <form onSubmit={handleSubmit}>
+            <h2>
+                {editingTask ? "Edit Task" : "Add Task"}
+            </h2>
+
+            <form onSubmit={handleSubmit} className="task-form">
 
                 <input
                     type="text"
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    placeholder="Enter task"
+                    placeholder="Enter task title"
                 />
 
                 <select
@@ -125,20 +128,26 @@ function TaskForm({ addTask, editingTask, updateTask, cancelEdit }) {
                     onChange={handleChange}
                 />
 
-                <button type="submit">
-                    {editingTask ? "Update Task" : "Add Task"}
-                </button>
+                <div className="form-actions">
 
-                {editingTask && (
-                    <button
-                        type="button"
-                        onClick={cancelEdit}
-                    >
-                        Cancel
+                    <button type="submit" className="primary-btn">
+                        {editingTask ? "Update Task" : "Add Task"}
                     </button>
-                )}
+
+                    {editingTask && (
+                        <button
+                            type="button"
+                            onClick={cancelEdit}
+                            className="secondary-btn"
+                        >
+                            Cancel
+                        </button>
+                    )}
+
+                </div>
 
             </form>
+
         </section>
     );
 }

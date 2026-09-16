@@ -6,17 +6,27 @@ function TaskStats({
 }) {
 
     return (
-        <section>
+        <section className="stats">
 
-            <h2>Task Statistics</h2>
+            <div className="stat-card">
+                <span>Total</span>
+                <strong>{totalTasks}</strong>
+            </div>
 
-            <p>Total Tasks: {totalTasks}</p>
+            <div className="stat-card">
+                <span>Active</span>
+                <strong>{activeTasks}</strong>
+            </div>
 
-            <p>Active: {activeTasks}</p>
+            <div className="stat-card">
+                <span>Completed</span>
+                <strong>{completedTasks}</strong>
+            </div>
 
-            <p>Completed: {completedTasks}</p>
-
-            <p>High Priority: {highPriorityTasks}</p>
+            <div className="stat-card">
+                <span>High Priority</span>
+                <strong>{highPriorityTasks}</strong>
+            </div>
 
         </section>
     );
