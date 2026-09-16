@@ -78,6 +78,9 @@ function App() {
         }));
     }
 
+    function cancelEdit() {
+        setEditingTask(null);
+    }
     const filteredTasks = tasks.filter(task => {
 
     const matchesSearch =
@@ -110,7 +113,12 @@ function App() {
             <Header />
 
             <main>
-                <TaskForm addTask={addTask} />
+                <TaskForm
+                    addTask={addTask}
+                    editingTask={editingTask}
+                    updateTask={updateTask}
+                    cancelEdit={cancelEdit}
+                />
 
                 <FilterBar
                     filters={filters}

@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 
-function TaskForm({ addTask, editingTask, updateTask }) {
+function TaskForm({ addTask, editingTask, updateTask, cancelEdit }) {
 
     const [formData, setFormData] = useState({
         title: "",
@@ -21,15 +21,26 @@ function TaskForm({ addTask, editingTask, updateTask }) {
     useEffect(() => {
 
         if (editingTask) {
+
             setFormData({
                 title: editingTask.title,
                 category: editingTask.category,
                 priority: editingTask.priority,
                 dueDate: editingTask.dueDate
             });
+
+        } else {
+
+            setFormData({
+                title: "",
+                category: "Learning",
+                priority: "Medium",
+                dueDate: ""
+            });
+
         }
 
-    }, [editingTask]);
+        }, [editingTask]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -117,6 +128,15 @@ function TaskForm({ addTask, editingTask, updateTask }) {
                 <button type="submit">
                     {editingTask ? "Update Task" : "Add Task"}
                 </button>
+
+                {editingTask && (
+                    <button
+                        type="button"
+                        onClick={cancelEdit}
+                    >
+                        Cancel
+                    </button>
+                )}
 
             </form>
         </section>
