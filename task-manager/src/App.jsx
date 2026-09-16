@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import TaskForm from "./components/TaskForm";
 import FilterBar from "./components/FilterBar";
 import TaskList from "./components/TaskList";
+import TaskStats from "./components/TaskStats";
 import {useState,useEffect} from "react";
 
 function App() {
@@ -108,6 +109,20 @@ function App() {
             matchesStatus
         );
     });
+
+
+    const totalTasks = tasks.length;
+
+    const completedTasks =
+        tasks.filter(task => task.completed).length;
+
+    const activeTasks =
+        tasks.filter(task => !task.completed).length;
+
+    const highPriorityTasks =
+        tasks.filter(task => task.priority === "High").length
+        
+        ;
     return (
         <div>
             <Header />
@@ -118,6 +133,13 @@ function App() {
                     editingTask={editingTask}
                     updateTask={updateTask}
                     cancelEdit={cancelEdit}
+                />
+                
+                <TaskStats
+                    totalTasks={totalTasks}
+                    activeTasks={activeTasks}
+                    completedTasks={completedTasks}
+                    highPriorityTasks={highPriorityTasks}
                 />
 
                 <FilterBar
