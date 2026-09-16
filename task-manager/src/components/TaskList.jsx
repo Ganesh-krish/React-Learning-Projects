@@ -1,23 +1,38 @@
-function TaskList({tasks,deleteTask,toggleTask}) {
+function TaskList({ tasks, deleteTask, toggleTask }) {
+
     return (
         <section>
             <h2>Tasks</h2>
 
-            {/* <p>{tasks[0].title}.</p> */}
-
-            {tasks.map( task =>{
+            {tasks.map(task => (
                 <div key={task.id}>
+
                     <h3>{task.title}</h3>
-                    <p>Priority : {task.priority}</p>
-                    <p>Status: {task.completed ? "Completed" : "Active"}</p>
+
+                    <p>Category: {task.category}</p>
+
+                    <p>Priority: {task.priority}</p>
+
+                    <p>Due Date: {task.dueDate || "No due date"}</p>
+
+                    <p>
+                        Status: {
+                            task.completed
+                                ? "Completed"
+                                : "Active"
+                        }
+                    </p>
+
                     <button onClick={() => toggleTask(task.id)}>
                         {task.completed ? "Undo" : "Complete"}
                     </button>
+
                     <button onClick={() => deleteTask(task.id)}>
                         Delete
                     </button>
+
                 </div>
-            })}
+            ))}
         </section>
     );
 }
