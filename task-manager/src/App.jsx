@@ -14,12 +14,17 @@ function App() {
         completed: false
     }
   ]);
+
+    function addTask(task) {
+        setTasks(prevTasks => [...prevTasks, task]);
+    }
+
     return (
         <div>
             <Header />
 
             <main>
-                <TaskForm />
+                <TaskForm addTask={addTask} />
 
                 <FilterBar />
 
