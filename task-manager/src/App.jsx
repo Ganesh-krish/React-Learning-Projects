@@ -15,6 +15,13 @@ function App() {
     }
   ]);
 
+  const [filters, setFilters] = useState({
+      search: "",
+      category: "All",
+      priority: "All",
+      status: "All"
+  });
+
     function addTask(task) {
         setTasks(prevTasks => [...prevTasks, task]);
     }
@@ -34,6 +41,43 @@ function App() {
             )
         );
     }
+
+    function handleFilterChange(e) {
+        const { name, value } = e.target;
+
+        setFilters(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    const filteredTasks = tasks.filter(task => {
+
+    const matchesSearch =
+        task.title
+            .toLowerCase()
+            .includes(filters.search.toLowerCase());
+
+    const matchesCategory =
+        filters.category === "All" ||
+        task.category === filters.category;
+
+    const matchesPriority =
+        filters.priority === "All" ||
+        task.priority === filters.priority;
+
+    const matchesStatus =
+        filters.status === "All" ||
+        (filters.status === "Completed" && task.completed) ||
+        (filters.status === "Active" && !task.completed);
+
+    return (
+            matchesSearch &&
+            matchesCategory &&
+            matchesPriority &&
+            matchesStatus
+        );
+    });
     return (
         <div>
             <Header />
@@ -41,10 +85,13 @@ function App() {
             <main>
                 <TaskForm addTask={addTask} />
 
-                <FilterBar />
+                <FilterBar
+                    filters={filters}
+                    onFilterChange={handleFilterChange}
+                />
 
                 <TaskList 
-                  tasks={tasks} 
+                  tasks={filteredTasks} 
                   deleteTask={deleteTask}
                   toggleTask={toggleTask}
                 />
